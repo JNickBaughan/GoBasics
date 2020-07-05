@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Println("Hello World")
+	cards := deck{"Five of Diamonds", "Five of Spades", "Five of Hearts", "Five of Clubs"}
+	cards.print()
+	cards.deal()
 }
