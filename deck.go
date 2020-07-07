@@ -24,7 +24,12 @@ func (d deck) print() {
 	}
 }
 
-func (d deck) deal() string {
-	fmt.Println(d[0])
-	return d[0]
+// is there an advantage to using a receiver function vs a function???
+// both seem to work
+func (d deck) deal(handSize int) (deck, deck) {
+	return d[:handSize], d[handSize : handSize+handSize]
+}
+
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize : handSize+handSize]
 }
