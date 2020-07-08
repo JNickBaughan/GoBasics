@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 // Create a new type of 'deck'
 // which is a slice of strings
@@ -9,7 +13,7 @@ type deck []string
 func newDeck() deck {
 	cards := deck{}
 	cardSuits := []string{"Spades", "Hearts", "Diamonds", "Clubs"}
-	cardValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Queen", "King", "Jack"}
+	cardValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Queen", "King", "Jack"}
 	for _, suit := range cardSuits {
 		for _, value := range cardValue {
 			cards = append(cards, value+" of "+suit)
@@ -22,6 +26,15 @@ func (d deck) print() {
 	for index, card := range d {
 		fmt.Println(index, card)
 	}
+}
+
+func (d deck) toString() string {
+	// since a deck "extends" []strings we can easily convert
+	return strings.Join([]string(d), ",")
+}
+
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
 // is there an advantage to using a receiver function vs a function???
