@@ -17,4 +17,7 @@ func main() {
 
 	hand.saveToFile("handOfCards")
 
+	newHand := readFromFile("handOfCards")
+	fmt.Println(newHand)
+
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -35,6 +36,22 @@ func (d deck) toString() string {
 
 func (d deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
+
+func readFromFile(filename string) deck {
+	bSlice, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+	cards := deck{}
+	cSlice := strings.Split(string(bSlice), ",")
+
+	for _, card := range cSlice {
+		cards = append(cards, card)
+	}
+	return cards
+
 }
 
 // is there an advantage to using a receiver function vs a function???
