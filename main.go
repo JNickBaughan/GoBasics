@@ -16,10 +16,10 @@ func main() {
 	handWithFunc.print()
 	handTwoWithFunc.print()
 
-	hand.saveToFile("handOfCards")
+	//hand.saveToFile("handOfCards")
 
-	newHand := readFromFile("handOfCards")
-	fmt.Println(newHand)
+	//newHand := readFromFile("handOfCards")
+	//fmt.Println(newHand)
 
 	hand.print()
 	hand.shuffle()

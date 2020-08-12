@@ -2,16 +2,13 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/rand"
-	"os"
-	"strings"
 	"time"
 )
 
 // Create a new type of 'deck'
 // which is a slice of strings
-type deck []string
+type deck []card
 
 func newDeck() deck {
 	cards := deck{}
@@ -19,7 +16,7 @@ func newDeck() deck {
 	cardValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Queen", "King", "Jack"}
 	for _, suit := range cardSuits {
 		for _, value := range cardValue {
-			cards = append(cards, value+" of "+suit)
+			cards = append(cards, card{suit: suit, value: value})
 		}
 	}
 	return cards
@@ -27,34 +24,38 @@ func newDeck() deck {
 
 func (d deck) print() {
 	for index, card := range d {
-		fmt.Println(index, card)
+		fmt.Println(index, card.value+" of "+card.suit)
 	}
 }
 
 func (d deck) toString() string {
 	// since a deck "extends" []strings we can easily convert
-	return strings.Join([]string(d), ",")
-}
-
-func (d deck) saveToFile(filename string) error {
-	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
-}
-
-func readFromFile(filename string) deck {
-	bSlice, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println("Error: ", err)
-		os.Exit(1)
+	s := ""
+	for _, c := range d {
+		s = s + ", " + c.value + " of " + c.suit
 	}
-	cards := deck{}
-	cSlice := strings.Split(string(bSlice), ",")
-
-	for _, card := range cSlice {
-		cards = append(cards, card)
-	}
-	return cards
-
+	return s
 }
+
+// func (d deck) saveToFile(filename string) error {
+// 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+// }
+
+// func readFromFile(filename string) deck {
+// 	bSlice, err := ioutil.ReadFile(filename)
+// 	if err != nil {
+// 		fmt.Println("Error: ", err)
+// 		os.Exit(1)
+// 	}
+// 	cards := deck{}
+// 	cSlice := strings.Split(string(bSlice), ",")
+
+// 	for _, card := range cSlice {
+// 		cards = append(cards, card.value+" of "+card.suit)
+// 	}
+// 	return cards
+
+// }
 
 // is there an advantage to using a receiver function vs a function???
 // both seem to work
