@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
 )
 
@@ -37,25 +40,29 @@ func (d deck) toString() string {
 	return s
 }
 
-// func (d deck) saveToFile(filename string) error {
-// 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
-// }
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
 
-// func readFromFile(filename string) deck {
-// 	bSlice, err := ioutil.ReadFile(filename)
-// 	if err != nil {
-// 		fmt.Println("Error: ", err)
-// 		os.Exit(1)
-// 	}
-// 	cards := deck{}
-// 	cSlice := strings.Split(string(bSlice), ",")
+func readFromFile(filename string) deck {
+	bSlice, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+	cards := deck{}
+	cSlice := strings.Split(string(bSlice), ",")
 
-// 	for _, card := range cSlice {
-// 		cards = append(cards, card.value+" of "+card.suit)
-// 	}
-// 	return cards
+	for _, c := range cSlice {
 
-// }
+		suitAndValue := strings.Split(c, " of ")
+		if len(suitAndValue) > 1 {
+			cards = append(cards, card{suit: suitAndValue[1], value: suitAndValue[0]})
+		}
+
+	}
+	return cards
+}
 
 // is there an advantage to using a receiver function vs a function???
 // both seem to work
