@@ -40,11 +40,15 @@ func main() {
 			phone: "555 555 5555",
 		},
 	}
-	// & gives you access to the memory address that variable is pointing to
-	// pBob := &bob
-	// // this will show the memory address
-	// println(pBob)
+
+	// if we have a value we can turn it into an address with &value
+	// if we have an address we can turn it into a value with *address
+
+	pToBob := &bob
+	fmt.Println(pToBob) //this will display a memory address
+
 	// not sure why this works... thought i would have to call it off of pBob
+	// this is actually expected with go
 	bob.printName() // bob dole
 	bob.updateFirstName("bill")
 	bob.updateLastName("clinton")
