@@ -36,3 +36,11 @@ func (pointerToPerson *person) updateFirstName(firstNameUpdate string) {
 func (pointerToPerson *person) updateLastName(lastNameUpdate string) {
 	(*pointerToPerson).lastName = lastNameUpdate
 }
+
+func updatePersonSlice(p []person, newPerson person) {
+	p[1] = newPerson
+}
+
+func updatePersonSliceName(p []person, name string) {
+	p[1].firstName = name
+}
